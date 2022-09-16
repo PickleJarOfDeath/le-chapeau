@@ -61,7 +61,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (Input.GetKeyDown(KeyCode.Space))
                 TryJump();
 
-            if (hatObject.activeInHierarchy == true)
+            if (hatObject.activeInHierarchy == false)
+            {
+                explosionObject.GetComponent<SphereCollider>().enabled = true;
+            }
+            else if (hatObject.activeInHierarchy == true)
             {
                 curHatTime += Time.deltaTime;
 
@@ -72,7 +76,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     if (Input.GetMouseButtonDown(0))
                     {
                         explosionTimer = 1;
-                        GameObject newExplosion = Instantiate(explosionObject, this.transform.position, this.transform.rotation) as GameObject;
+                        PhotonNetwork.Instantiate("Explosion", this.transform.position, this.transform.rotation);
                     }
                 }
             }
